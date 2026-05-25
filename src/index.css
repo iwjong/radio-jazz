@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -17,7 +17,7 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background: #1b1f28;
+    background: #1a141c;
     color: #eef0f4;
     font-family: theme("fontFamily.sans");
     -webkit-font-smoothing: antialiased;
@@ -25,7 +25,7 @@
   }
 
   ::selection {
-    background: rgba(233, 196, 106, 0.35);
+    background: rgba(232, 146, 74, 0.35);
     color: #fff;
   }
 
@@ -48,7 +48,7 @@
 
 @layer components {
   .glass {
-    background: rgba(32, 36, 45, 0.4);
+    background: rgba(36, 28, 40, 0.4);
     backdrop-filter: blur(18px) saturate(108%);
     -webkit-backdrop-filter: blur(18px) saturate(108%);
     border: 1px solid rgba(255, 255, 255, 0.05);
@@ -57,7 +57,7 @@
    * Shared outer radius (0.75rem) for top bar, player, modals, and glass-strong cards.
    */
   .glass-strong {
-    background: rgba(29, 32, 40, 0.56);
+    background: rgba(32, 24, 36, 0.56);
     backdrop-filter: blur(24px) saturate(108%);
     -webkit-backdrop-filter: blur(24px) saturate(108%);
     border: 1px solid rgba(255, 255, 255, 0.06);
@@ -68,13 +68,13 @@
    * flicker while tiles and map opacity transition. Same border language as glass-strong.
    */
   .player-dock {
-    background: rgba(29, 32, 40, 0.82);
+    background: rgba(32, 24, 36, 0.82);
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 0.75rem;
   }
   /** Top chrome: opaque bar over the map so labels and controls stay readable. */
   .top-bar-dock {
-    background: rgba(22, 25, 33, 0.88);
+    background: rgba(20, 15, 20, 0.88);
     border: 1px solid rgba(255, 255, 255, 0.09);
     border-radius: 0.75rem;
     box-shadow:
@@ -83,7 +83,7 @@
   }
   /** Search / Library / About: solid card, no frosted map blur. */
   .panel-modal {
-    background: rgba(22, 25, 33, 0.98);
+    background: rgba(20, 15, 20, 0.98);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 0.75rem;
     box-shadow:
@@ -94,13 +94,13 @@
    * Sticky country headings inside library modal scroll area.
    */
   .library-section-header {
-    background: rgba(22, 25, 33, 0.98);
+    background: rgba(20, 15, 20, 0.98);
   }
   .hairline {
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
   }
   .gradient-text {
-    background: linear-gradient(135deg, #e9c46a 0%, #fff5d6 50%, #d4a23d 100%);
+    background: linear-gradient(135deg, #e8924a 0%, #f4d4bc 50%, #d9732d 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -113,19 +113,19 @@
   }
   button:focus-visible,
   input:focus-visible {
-    outline: 1px solid rgba(242, 219, 162, 0.75);
+    outline: 1px solid rgba(244, 184, 138, 0.75);
     outline-offset: 3px;
   }
   .marker-dot {
     background: radial-gradient(
       circle at 30% 30%,
       rgba(255, 248, 225, 0.95) 0%,
-      rgba(233, 196, 106, 0.72) 42%,
-      rgba(184, 134, 42, 0.28) 100%
+      rgba(232, 146, 74, 0.72) 42%,
+      rgba(184, 92, 34, 0.28) 100%
     );
     box-shadow:
-      0 0 4px rgba(233, 196, 106, 0.28),
-      0 0 10px rgba(233, 196, 106, 0.08);
+      0 0 4px rgba(232, 146, 74, 0.28),
+      0 0 10px rgba(232, 146, 74, 0.08);
   }
   .editorial-composer {
     font-family: theme("fontFamily.sans");
@@ -133,7 +133,7 @@
     font-weight: 600;
     line-height: 1.25;
     letter-spacing: -0.015em;
-    color: rgba(255, 247, 226, 0.96);
+    color: rgba(255, 240, 230, 0.96);
   }
   .editorial-work {
     margin-top: 0.24rem;
@@ -150,7 +150,7 @@
     font-weight: 500;
     line-height: 1.35;
     letter-spacing: -0.01em;
-    color: rgba(242, 219, 162, 0.68);
+    color: rgba(244, 184, 138, 0.68);
   }
   .editorial-detail {
     font-size: 0.72rem;
@@ -234,8 +234,8 @@
     justify-content: center;
     padding: 1.5rem;
     background:
-      linear-gradient(180deg, rgba(36, 41, 52, 0.78), rgba(19, 24, 33, 0.95)),
-      linear-gradient(90deg, rgba(232, 216, 170, 0.03), transparent 42%, rgba(157, 178, 191, 0.035));
+      linear-gradient(180deg, rgba(42, 30, 44, 0.78), rgba(20, 15, 20, 0.95)),
+      linear-gradient(90deg, rgba(232, 146, 74, 0.04), transparent 42%, rgba(155, 127, 212, 0.04));
   }
   .google-map-fallback-hint {
     max-width: 28rem;
@@ -257,9 +257,9 @@
   }
 
   .rk-map-marker--active {
-    --rk-marker-bg: #cea337;
-    --rk-marker-border: #cea337;
-    --rk-marker-tail: #cea337;
+    --rk-marker-bg: #d9732d;
+    --rk-marker-border: #d9732d;
+    --rk-marker-tail: #d9732d;
   }
 
   .rk-map-marker__inner {
@@ -349,7 +349,7 @@
   .rk-map-marker--active .rk-map-marker__text:not(.rk-map-marker__text--twoline) .rk-map-marker__line--composer {
     font-weight: 700;
     font-size: 12px;
-    color: rgb(47, 34, 9);
+    color: rgb(52, 28, 12);
   }
 
   /* Two-line now-playing: composer then work title (matches player stack). */
@@ -359,13 +359,13 @@
   }
 
   .rk-map-marker--active .rk-map-marker__text--twoline .rk-map-marker__line--composer {
-    color: rgb(47, 34, 9);
+    color: rgb(52, 28, 12);
   }
 
   .rk-map-marker--active .rk-map-marker__text--twoline .rk-map-marker__line--title {
     font-weight: 700;
     font-size: 12px;
-    color: rgb(47, 34, 9);
+    color: rgb(52, 28, 12);
   }
 
   .rk-map-marker__tail {
@@ -389,7 +389,7 @@
       transparent 1px,
       transparent 3px
     ),
-    linear-gradient(135deg, #181b24 0%, #2a3040 100%);
+    linear-gradient(135deg, #1a141c 0%, #302636 100%);
 }
 
 @keyframes metadataDissolve {

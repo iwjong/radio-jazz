@@ -17,7 +17,7 @@ export function getListeningPresentation(
     return {
       stateLabel: "Nothing playing",
       title: "Choose a station and let the room settle",
-      subtitle: "A quiet world map of curated classical stations is ready.",
+      subtitle: "A quiet world map of curated jazz stations is ready.",
       detail: "Search or open the library when the listening room calls.",
     };
   }
@@ -26,7 +26,7 @@ export function getListeningPresentation(
     station.editorialDescription ||
     station.listeningMood ||
     countryLabel ||
-    "Curated classical stream";
+    "Curated jazz stream";
 
   return {
     stateLabel: playbackStateLabel(status, station),
@@ -47,7 +47,7 @@ function playbackStateLabel(status: PlaybackStatus, station: Station): string {
 }
 
 function stationDetail(station: Station, status: PlaybackStatus): string {
-  if (status === "loading") return "Opening a secure classical stream";
+  if (status === "loading") return "Opening a secure jazz stream";
   if (status === "paused") return "Playback is held in a quiet listening state";
   if (status === "error") {
     return station.isSecureStream

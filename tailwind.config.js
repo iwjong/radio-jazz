@@ -5,32 +5,32 @@ export default {
     extend: {
       colors: {
         ink: {
-          950: "#12151d",
-          900: "#181b24",
-          800: "#20242e",
-          700: "#2b303b",
-          600: "#3a4050",
+          950: "#140f14",
+          900: "#1a141c",
+          800: "#241c28",
+          700: "#302636",
+          600: "#423848",
         },
         gold: {
-          300: "#f2dba2",
-          400: "#e9c46a",
-          500: "#d4a23d",
-          600: "#b8862a",
+          300: "#f4b88a",
+          400: "#e8924a",
+          500: "#d9732d",
+          600: "#b85c22",
         },
         accent: {
-          400: "#7dd3fc",
-          500: "#38bdf8",
+          400: "#c4a8e8",
+          500: "#9b7fd4",
         },
       },
       fontFamily: {
         display: ["'Manrope'", "system-ui", "sans-serif"],
         sans: ["'Manrope'", "system-ui", "sans-serif"],
         /** Top bar + quote generator blockquotes only */
-        serif: ["'EB Garamond'", "Georgia", "serif"],
+        serif: ["'Fraunces'", "Georgia", "serif"],
         mono: ["'JetBrains Mono'", "Menlo", "monospace"],
       },
       boxShadow: {
-        soft: "0 18px 50px -28px rgba(0, 0, 0, 0.48)",
+        soft: "0 18px 50px -28px rgba(0, 0, 0, 0.52)",
       },
       keyframes: {
         pulseSoft: {

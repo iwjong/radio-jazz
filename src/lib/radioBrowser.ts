@@ -4,9 +4,9 @@ import { applyCuratedStationLayer } from "./curatedStations";
 
 const DISCOVERY_URL = "https://all.api.radio-browser.info/json/servers";
 const DEFAULT_MIRRORS = ["https://de1.api.radio-browser.info"];
-const LAST_MIRROR_KEY = "radio-klassik:last-radio-browser-mirror";
+const LAST_MIRROR_KEY = "radio-jazz:last-radio-browser-mirror";
 const DEFAULT_TIMEOUT_MS = 8500;
-const CLASSICAL_SCORE_THRESHOLD = 6;
+const JAZZ_SCORE_THRESHOLD = 6;
 
 let discoveredMirrors: string[] | null = null;
 let CURRENT_MIRROR = readLastMirror() ?? DEFAULT_MIRRORS[0];
@@ -43,12 +43,23 @@ interface FetchWithTimeoutInit extends RequestInit {
   timeoutMs: number;
 }
 
-// Radio Browser tags are crowd-authored. In a curated classical product,
+// Radio Browser tags are crowd-authored. In a curated jazz product,
 // uncertain genre matches are excluded instead of allowed through.
 const NEGATIVE_PATTERNS = [
-  /\bjazz\b/,
-  /\bsmooth\s+jazz\b/,
-  /\bclassic\s+jazz\b/,
+  /\bclassical\b/,
+  /\bklassik\b/,
+  /\bklassiek\b/,
+  /\bclassique\b/,
+  /\bclassica\b/,
+  /\bopera\b/,
+  /\bbaroque\b/,
+  /\bsymphony\b/,
+  /\borchestra\b/,
+  /\bphilharmonic\b/,
+  /\bchamber\b/,
+  /\bbach\b/,
+  /\bbeethoven\b/,
+  /\bmozart\b/,
   /\btalk\b/,
   /\btalk\s+radio\b/,
   /\bpodcast\b/,
@@ -60,11 +71,15 @@ const NEGATIVE_PATTERNS = [
   /\bcarols?\b/,
   /\bholiday\b/,
   /\boldies\b/,
+  /\bclassic\s+rock\b/,
+  /\bclassic\s+hits\b/,
+  /\b80s\b/,
+  /\b90s\b/,
   /\bschlager\b/,
   /\bpop\b/,
   /\brock\b/,
   /\bmetal\b/,
-  /\bcountry\b/,
+  /\bcountry\s+music\b/,
   /\belectronic\b/,
   /\bedm\b/,
   /\bdance\b/,
@@ -85,75 +100,68 @@ const NEGATIVE_PATTERNS = [
   /\bbackground\b/,
   /\bsleep\b/,
   /\bmeditation\b/,
+  /\breggae\b/,
+  /\bcumbia\b/,
 ];
 
 const POSITIVE_PATTERNS = [
-  { pattern: /\bclassical\b/, weight: 4 },
-  { pattern: /\bklassik\b/, weight: 4 },
-  { pattern: /\bklassiek\b/, weight: 4 },
-  { pattern: /\bklassische\b/, weight: 4 },
-  { pattern: /\bclassique\b/, weight: 4 },
-  { pattern: /\bclasica\b/, weight: 4 },
-  { pattern: /\bclassica\b/, weight: 4 },
-  { pattern: /\bsymphony\b/, weight: 4 },
-  { pattern: /\bsymphonic\b/, weight: 4 },
-  { pattern: /\borchestra\b/, weight: 4 },
-  { pattern: /\borchestral\b/, weight: 4 },
-  { pattern: /\bphilharmonic\b/, weight: 4 },
-  { pattern: /\bphilharmon\w*\b/, weight: 4 },
-  { pattern: /\bopera\b/, weight: 4 },
-  { pattern: /\bbaroque\b/, weight: 4 },
-  { pattern: /\bchamber\b/, weight: 4 },
-  { pattern: /\bmozart\b/, weight: 3 },
-  { pattern: /\bbach\b/, weight: 3 },
-  { pattern: /\bbeethoven\b/, weight: 3 },
-  { pattern: /\bvivaldi\b/, weight: 3 },
-  { pattern: /\bclassical\s+piano\b|\bpiano\s+classical\b/, weight: 3 },
-  { pattern: /\bclassical\s+violin\b|\bviolin\s+classical\b/, weight: 3 },
+  { pattern: /\bjazz\b/, weight: 4 },
+  { pattern: /\bsmooth\s+jazz\b/, weight: 4 },
+  { pattern: /\bclassic\s+jazz\b/, weight: 4 },
+  { pattern: /\bbebop\b/, weight: 4 },
+  { pattern: /\bswing\b/, weight: 4 },
+  { pattern: /\bbig\s+band\b/, weight: 4 },
+  { pattern: /\bfusion\b/, weight: 3 },
+  { pattern: /\blatin\s+jazz\b/, weight: 4 },
+  { pattern: /\bcool\s+jazz\b/, weight: 4 },
+  { pattern: /\bcontemporary\s+jazz\b/, weight: 4 },
+  { pattern: /\bvocal\s+jazz\b/, weight: 3 },
+  { pattern: /\bjazz\s+standards?\b/, weight: 3 },
+  { pattern: /\bnu\s+jazz\b/, weight: 3 },
+  { pattern: /\bmodern\s+jazz\b/, weight: 3 },
+  { pattern: /\bacid\s+jazz\b/, weight: 3 },
+  { pattern: /\bjazz\s+blues\b|\bblues\s+jazz\b/, weight: 3 },
+  { pattern: /\bjazz\s+radio\b/, weight: 3 },
+  { pattern: /\bjazz\s+fm\b/, weight: 3 },
 ];
 
-const TRUSTED_CLASSICAL_BRANDS = [
-  /\bclassic\s+fm\b/,
-  /\bbbc\s+radio\s*3\b/,
-  /\brai\s+radio\s*3\b/,
-  /\bwdr\s*3\b/,
-  /\bbr-?klassik\b/,
-  /\bnpo\s+klassiek\b/,
-  /\bradio\s+swiss\s+classic\b/,
-  /\bfrance\s+musique\b/,
-  /\babc\s+classic\b/,
-  /\bklara\b/,
-  /\bwqxr\b/,
-  /\bkusc\b/,
-  /\bweta\b/,
-  /\bwfmt\b/,
-  /\bwcrb\b/,
-  /\bwclv\b/,
-  /\bking\s+fm\b/,
-  /\bdr\s+p2\b/,
+const TRUSTED_JAZZ_BRANDS = [
+  /\bwbgo\b/,
+  /\bjazz\s*24\b/,
+  /\bradio\s+swiss\s+jazz\b/,
+  /\bjazz\s*fm\b/,
+  /\btsf\s+jazz\b/,
+  /\bfip\b/,
+  /\bkcsm\b/,
+  /\bwclk\b/,
+  /\bkmhd\b/,
+  /\bwrti\b/,
+  /\bwfuv\b/,
+  /\bjazz\s*radio\b/,
+  /\becm\b/,
+  /\bglaser\s+radio\b/,
+  /\brrc\b/,
+  /\bncr\b.*jazz/,
 ];
 
 const POSITIVE_TAGS = [
-  "classical",
-  "classical music",
-  "klassik",
-  "klassiek",
-  "klassische musik",
-  "classique",
-  "clasica",
-  "clássica",
-  "classica",
-  "symphony",
-  "symphonic",
-  "orchestra",
-  "orchestral",
-  "philharmonic",
-  "opera",
-  "baroque",
-  "chamber music",
-  "early music",
-  "piano classical",
-  "violin classical",
+  "jazz",
+  "smooth jazz",
+  "classic jazz",
+  "bebop",
+  "swing",
+  "big band",
+  "latin jazz",
+  "cool jazz",
+  "contemporary jazz",
+  "vocal jazz",
+  "jazz standards",
+  "nu jazz",
+  "modern jazz",
+  "acid jazz",
+  "jazz blues",
+  "blues jazz",
+  "fusion jazz",
 ];
 
 export function getMirror() {
@@ -179,7 +187,7 @@ export function normalizeTags(raw: string): string[] {
     .filter(Boolean);
 }
 
-export function scoreClassicalCandidate(input: {
+export function scoreJazzCandidate(input: {
   name: string;
   tags: string[];
   url: string;
@@ -206,15 +214,21 @@ export function scoreClassicalCandidate(input: {
     (total, item) => total + (item.pattern.test(tagText) ? 2 : 0),
     0,
   );
-  const brandScore = TRUSTED_CLASSICAL_BRANDS.some((pattern) =>
+  const brandScore = TRUSTED_JAZZ_BRANDS.some((pattern) =>
     pattern.test(nameText),
   )
     ? 4
     : 0;
 
-  const hasClassicalIdentity = nameScore > 0 || brandScore > 0;
+  const hasJazzIdentity = nameScore > 0 || brandScore > 0;
   const hasStrongTagStack = positiveTagCount >= 2;
-  if (!hasClassicalIdentity && !hasStrongTagStack) return 0;
+  if (!hasJazzIdentity && !hasStrongTagStack) return 0;
+
+  const bluesOnly =
+    /\bblues\b/.test(combined) &&
+    !/\bjazz\b/.test(combined) &&
+    brandScore === 0;
+  if (bluesOnly) return 0;
 
   let score = nameScore + tagScore + brandScore;
   if (isSecureStreamUrl(input.url)) score += 1.5;
@@ -225,13 +239,13 @@ export function scoreClassicalCandidate(input: {
   return score;
 }
 
-export function isLikelyClassical(name: string, tags: string[]): boolean {
+export function isLikelyJazz(name: string, tags: string[]): boolean {
   return (
-    scoreClassicalCandidate({
+    scoreJazzCandidate({
       name,
       tags,
       url: "https://example.invalid/stream",
-    }) >= CLASSICAL_SCORE_THRESHOLD
+    }) >= JAZZ_SCORE_THRESHOLD
   );
 }
 
@@ -246,7 +260,7 @@ export function mapStation(
   if (r.lastcheckok !== 1) return null;
 
   const tags = normalizeTags(r.tags || "");
-  const curationScore = scoreClassicalCandidate({
+  const curationScore = scoreJazzCandidate({
     name: r.name,
     tags,
     url,
@@ -254,7 +268,7 @@ export function mapStation(
     codec: r.codec,
     bitrate: r.bitrate,
   });
-  if (curationScore < CLASSICAL_SCORE_THRESHOLD) return null;
+  if (curationScore < JAZZ_SCORE_THRESHOLD) return null;
 
   let lat = r.geo_lat;
   let lng = r.geo_long;
@@ -392,7 +406,7 @@ async function fetchWithTimeout(
       ...init,
       signal: controller.signal,
       headers: {
-        "User-Agent": "Radio-Klassik/1.0",
+        "User-Agent": "Radio-Jazz/1.0",
         ...(init.headers || {}),
       },
     });
@@ -471,17 +485,18 @@ export interface FetchOptions {
   timeoutMs?: number;
 }
 
-export async function fetchClassicalStations(
+export async function fetchJazzStations(
   opts: FetchOptions = {},
 ): Promise<Station[] | null> {
   const limit = opts.limit ?? 1200;
   const querySpecs = [
-    { tag: "classical", limit },
-    { tag: "klassik", limit: 500 },
-    { tag: "opera", limit: 240 },
-    { tag: "baroque", limit: 180 },
-    { tag: "symphony", limit: 160 },
-    { tag: "chamber music", limit: 120 },
+    { tag: "jazz", limit },
+    { tag: "smooth jazz", limit: 500 },
+    { tag: "bebop", limit: 240 },
+    { tag: "swing", limit: 180 },
+    { tag: "latin jazz", limit: 160 },
+    { tag: "big band", limit: 120 },
+    { tag: "vocal jazz", limit: 120 },
   ];
 
   const seen = new Map<string, Station>();

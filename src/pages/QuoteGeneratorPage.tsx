@@ -37,10 +37,10 @@ export function QuoteGeneratorPage() {
   const homeHref = import.meta.env.BASE_URL;
 
   return (
-    <div className="min-h-full bg-[#1b1f28] text-[#eef0f4] px-4 py-10">
+    <div className="min-h-full bg-[#1a141c] text-[#eef0f4] px-4 py-10">
       <div className="mx-auto max-w-2xl panel-modal p-8 shadow-soft">
         <p className="text-[10px] tracking-[0.3em] text-gold-400/80 uppercase">
-          Radio Klassik
+          Radio Jazz
         </p>
         <h1 className="font-display text-2xl text-white mt-1">Music quote pool</h1>
         <p className="text-white/55 text-sm mt-2">
@@ -81,7 +81,7 @@ export function QuoteGeneratorPage() {
 
         <p className="mt-10 text-[11px] text-white/40">
           <a href={homeHref} className="underline hover:text-gold-400">
-            ← Back to Radio Klassik
+            ← Back to Radio Jazz
           </a>
         </p>
       </div>

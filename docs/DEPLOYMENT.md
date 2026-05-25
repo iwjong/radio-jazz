@@ -1,4 +1,4 @@
-# Radio Klassik — Deployment and operations
+# Radio Jazz — Deployment and operations
 
 This guide covers deploying the static **Vite + React** app from a Git repository to **GitHub Pages, Netlify, Vercel, Cloudflare Pages**, using a custom domain, and securing the **Google Maps API key**.
 
@@ -92,7 +92,7 @@ Optional **`VITE_GOOGLE_MAPS_MAP_ID`** is reserved for a future vector / Advance
 
 ### GitHub Pages (this repo)
 
-Project Pages URL shape: `https://<username>.github.io/<repository>/` — for example [https://iwjong.github.io/radio-klassik/](https://iwjong.github.io/radio-klassik/).
+Project Pages URL shape: `https://<username>.github.io/<repository>/` — for example [https://iwjong.github.io/radio-jazz/](https://iwjong.github.io/radio-jazz/).
 
 1. **Pages source:** **Settings → Pages → Build and deployment**. Set **Source** to **GitHub Actions** (static upload from CI, not Jekyll branch builds).
 2. **Repository secret:** **Settings → Secrets and variables → Actions → New repository secret**  
@@ -101,15 +101,15 @@ Project Pages URL shape: `https://<username>.github.io/<repository>/` — for ex
 3. **Workflow:** [`.github/workflows/deploy-pages.yml`](../.github/workflows/deploy-pages.yml) runs on push to `main` or `master`. It sets `VITE_BASE_URL` to `/<repository-name>/` so Vite emits correct asset URLs under the project path.
 4. **Google key HTTP referrers:** include  
    `https://<username>.github.io/<repository>/*`  
-   (example: `https://iwjong.github.io/radio-klassik/*`).
+   (example: `https://iwjong.github.io/radio-jazz/*`).
 5. After the first successful run, confirm the site URL under **Settings → Pages**.
 
 **Optional — mimic Pages locally after build:**
 
 ```bash
-VITE_BASE_URL=/radio-klassik/ npm run build
+VITE_BASE_URL=/radio-jazz/ npm run build
 npm run preview
-# Then open http://localhost:4173/radio-klassik/ (include the repo path; root `/` will 404 assets)
+# Then open http://localhost:4173/radio-jazz/ (include the repo path; root `/` will 404 assets)
 ```
 
 If you push a prebuilt `dist/` to a `gh-pages` branch **without** CI, you can inject the key locally via `.env.production` or `export` before `npm run build`. Prefer **CI secrets** so the key does not sit in shell history or ad-hoc scripts.

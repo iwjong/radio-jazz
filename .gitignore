@@ -25,4 +25,4 @@ dist-ssr
 *.sw?
 
 # Old nested app path (dev tools may recreate with only Vite cache)
-klassik-globe/
+jazz-globe/

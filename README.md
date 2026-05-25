@@ -1,17 +1,17 @@
-# Radio Klassik
+# Radio Jazz
 
-Classical radio on a **map-first** UI (inspired by [Radio Garden](https://radio.garden/)): pick a station from **Google Maps**, stream via [Radio Browser](https://www.radio-browser.info/). Built with **Vite**, **React 19**, **TypeScript**, and **Tailwind CSS**.
+Jazz radio on a **map-first** UI (inspired by [Radio Garden](https://radio.garden/)): pick a station from **Google Maps**, stream via [Radio Browser](https://www.radio-browser.info/). Built with **Vite**, **React 19**, **TypeScript**, and **Tailwind CSS**.
 
-**Live:** [https://iwjong.github.io/radio-klassik](https://iwjong.github.io/radio-klassik)
+**Live:** [https://iwjong.github.io/radio-jazz](https://iwjong.github.io/radio-jazz)
 
 ## Features
 
 - **Map** — Hybrid satellite + labels, custom dock-style markers, selected marker can show now-playing lines when stream metadata exists. Map keyboard shortcuts are off so **arrow keys** change stations.
 - **Player** — Play/pause, prev/next, volume, focus mode; compact typography for station titles and ICY metadata.
 - **Panels** — Search, Library, and About open as **centered modals** (no backdrop blur on overlays).
-- **Library** — Recently played, top voted, by country (favorites were removed; recents persist in `localStorage` under Zustand key `radio-klassik-v1`).
+- **Library** — Recently played, top voted, by country (favorites were removed; recents persist in `localStorage` under Zustand key `radio-jazz-v1`).
 - **Search** — Name, country, code, tags; **`/`** or **`S`**.
-- **Top bar** — Random **music quotes** (pool of 100); quote refreshes when you **change station**. Quote text uses **EB Garamond**; UI body uses **Manrope**; monospace uses **JetBrains Mono**.
+- **Top bar** — Random **music quotes** (pool of 100, jazz-heavy); quote refreshes when you **change station**. Quote text uses **Fraunces**; UI body uses **Manrope**; monospace uses **JetBrains Mono**.
 - **Quote pool page** — `quote-generator.html` (shuffle, copy quote, copy as TS array); linked from About.
 - **Legacy HTTP streams** — Optional in-app toggle (may be blocked on strict HTTPS sites).
 
@@ -48,7 +48,7 @@ Full Pages deploy, referrer patterns, and key setup: **[docs/DEPLOYMENT.md](docs
 
 ## Station catalogue
 
-`src/lib/radioBrowser.ts` queries Radio Browser mirrors, scores classical signals, filters obvious non-classical noise, and prefers healthy HTTPS streams where possible.
+`src/lib/radioBrowser.ts` queries Radio Browser mirrors, scores jazz signals, filters obvious non-jazz noise (classical, pop, talk, and similar), and prefers healthy HTTPS streams where possible.
 
 ## Keyboard
 
@@ -56,4 +56,4 @@ Full Pages deploy, referrer patterns, and key setup: **[docs/DEPLOYMENT.md](docs
 
 ## License
 
-MIT. Radio Browser and each broadcaster’s streams remain under their respective terms.
+MIT. Radio Browser and each broadcaster's streams remain under their respective terms.

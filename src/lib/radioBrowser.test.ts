@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import type { RawStation } from "./types";
 import {
   __resetRadioBrowserForTests,
-  fetchClassicalStations,
+  fetchJazzStations,
   mapStation,
   RadioBrowserError,
 } from "./radioBrowser";
@@ -10,15 +10,15 @@ import {
 const baseStation: RawStation = {
   changeuuid: "change-1",
   stationuuid: "station-1",
-  name: "BBC Radio 3",
+  name: "WBGO Jazz 88.3",
   url: "https://example.com/stream.mp3",
   url_resolved: "https://example.com/stream.mp3",
   homepage: "",
   favicon: "",
-  tags: "classical",
-  country: "United Kingdom",
-  countrycode: "GB",
-  state: "",
+  tags: "jazz",
+  country: "United States",
+  countrycode: "US",
+  state: "New Jersey",
   language: "english",
   votes: 1200,
   codec: "MP3",
@@ -27,8 +27,8 @@ const baseStation: RawStation = {
   lastcheckok: 1,
   clickcount: 10,
   clicktrend: 0,
-  geo_lat: 51.5,
-  geo_long: -0.12,
+  geo_lat: 40.735,
+  geo_long: -74.172,
 };
 
 afterEach(() => {
@@ -36,25 +36,25 @@ afterEach(() => {
   __resetRadioBrowserForTests();
 });
 
-describe("classical curation filter", () => {
-  it("keeps trusted classical stations and excludes contaminated genres", () => {
+describe("jazz curation filter", () => {
+  it("keeps trusted jazz stations and excludes contaminated genres", () => {
     expect(mapStation(baseStation)).toMatchObject({
-      name: "BBC Radio 3",
+      name: "WBGO",
       isSecureStream: true,
       verified: true,
       priorityScore: 9,
       editorialDescription:
-        "British classical, new music, opera, and cultural conversation.",
-      listeningMood: "Expansive late-evening orchestral listening.",
-      atmosphereHint: "warm concert hall",
+        "Newark's public jazz station — straight-ahead, Latin, and contemporary voices from the New York metro.",
+      listeningMood: "Late-set energy with a warm room tone.",
+      atmosphereHint: "smoky Newark club",
     });
 
     expect(
       mapStation({
         ...baseStation,
-        stationuuid: "jazz-1",
-        name: "Jazz Radio Classic Jazz",
-        tags: "classical,jazz",
+        stationuuid: "classical-1",
+        name: "Radio Swiss Classic",
+        tags: "jazz,classical",
       }),
     ).toBeNull();
 
@@ -63,7 +63,7 @@ describe("classical curation filter", () => {
         ...baseStation,
         stationuuid: "generic-1",
         name: "Vivid Bharti",
-        tags: "classical",
+        tags: "jazz",
         votes: 15800,
       }),
     ).toBeNull();
@@ -72,8 +72,8 @@ describe("classical curation filter", () => {
       mapStation({
         ...baseStation,
         stationuuid: "seo-1",
-        name: "0R - BACH - CLASSICAL || Classical, Baroque, Orchestra, Piano, Strings, Chamber Music, Solo Instrument, Sacred, Symphonies, Concertos, Melodic, Calm, Relaxing, Instrumental, Elegant",
-        tags: "bach,chamber,classical",
+        name: "0R - JAZZ - SMOOTH || Jazz, Bebop, Swing, Big Band, Fusion, Latin Jazz, Vocal Jazz, Blues, Instrumental, Relaxing, Chill",
+        tags: "jazz,smooth jazz",
       }),
     ).toBeNull();
 
@@ -81,8 +81,8 @@ describe("classical curation filter", () => {
       mapStation({
         ...baseStation,
         stationuuid: "holiday-1",
-        name: "Christmas FM Classical & Carols",
-        tags: "christmas,carols,classical",
+        name: "Christmas Jazz FM",
+        tags: "christmas,jazz",
       }),
     ).toBeNull();
   });
@@ -91,7 +91,7 @@ describe("classical curation filter", () => {
     const legacy = {
       ...baseStation,
       stationuuid: "legacy-1",
-      name: "Classical Radio",
+      name: "Jazz Radio",
       url: "http://example.com/stream.mp3",
       url_resolved: "http://example.com/stream.mp3",
     };
@@ -132,7 +132,7 @@ describe("Radio Browser loading", () => {
       }),
     );
 
-    const stations = await fetchClassicalStations({ limit: 1, timeoutMs: 1000 });
+    const stations = await fetchJazzStations({ limit: 1, timeoutMs: 1000 });
 
     expect(stations).toHaveLength(1);
     expect(stations?.[0].votes).toBe(1800);
@@ -151,20 +151,20 @@ describe("Radio Browser loading", () => {
           {
             ...baseStation,
             stationuuid: "station-2",
-            name: "BBC Radio 3 (AAC)",
+            name: "WBGO (AAC)",
             votes: 2400,
           },
         ]);
       }),
     );
 
-    const stations = await fetchClassicalStations({ limit: 2, timeoutMs: 1000 });
+    const stations = await fetchJazzStations({ limit: 2, timeoutMs: 1000 });
 
     expect(stations).toHaveLength(1);
     expect(stations?.[0]).toMatchObject({
-      name: "BBC Radio 3",
-      votes: 2400,
-      curatedStationId: "bbc-radio-3",
+      name: "WBGO",
+      votes: 1200,
+      curatedStationId: "wbgo",
     });
   });
 
@@ -179,9 +179,7 @@ describe("Radio Browser loading", () => {
       }),
     );
 
-    await expect(fetchClassicalStations({ timeoutMs: 1000 })).resolves.toEqual(
-      [],
-    );
+    await expect(fetchJazzStations({ timeoutMs: 1000 })).resolves.toEqual([]);
   });
 
   it("throws a structured error when every mirror fails", async () => {
@@ -196,7 +194,7 @@ describe("Radio Browser loading", () => {
     );
 
     await expect(
-      fetchClassicalStations({ limit: 1, timeoutMs: 1000 }),
+      fetchJazzStations({ limit: 1, timeoutMs: 1000 }),
     ).rejects.toBeInstanceOf(RadioBrowserError);
   });
 
@@ -205,7 +203,7 @@ describe("Radio Browser loading", () => {
     controller.abort();
 
     await expect(
-      fetchClassicalStations({ signal: controller.signal }),
+      fetchJazzStations({ signal: controller.signal }),
     ).resolves.toBeNull();
   });
 });

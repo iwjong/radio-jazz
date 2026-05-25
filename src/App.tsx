@@ -6,7 +6,7 @@ import { TopBar } from "./components/TopBar";
 import { AboutModal } from "./components/AboutModal";
 import { useStore } from "./store/useStore";
 import {
-  fetchClassicalStations,
+  fetchJazzStations,
   isAbortError,
   RadioBrowserError,
 } from "./lib/radioBrowser";
@@ -43,7 +43,7 @@ export default function App() {
 
     setLoading(true);
     setLoadError(null);
-    fetchClassicalStations({
+    fetchJazzStations({
       signal: controller.signal,
       includeLegacyStreams: showLegacyStreams,
     })
@@ -153,7 +153,7 @@ function BackgroundDecor() {
       className="absolute inset-0 pointer-events-none"
       style={{
         background:
-          "radial-gradient(1100px 780px at 50% 42%, rgba(232,216,170,0.075), transparent 66%), radial-gradient(900px 680px at 84% 92%, rgba(157,178,191,0.065), transparent 68%), linear-gradient(180deg, #252832 0%, #1d222b 48%, #181c24 100%)",
+          "radial-gradient(1100px 780px at 50% 42%, rgba(232,146,74,0.08), transparent 66%), radial-gradient(900px 680px at 84% 92%, rgba(155,127,212,0.07), transparent 68%), linear-gradient(180deg, #2a1e2c 0%, #1f1822 48%, #140f14 100%)",
       }}
     />
   );
@@ -180,7 +180,7 @@ function EmptyOverlay() {
           Curated stations
         </div>
         <h3 className="font-display text-2xl text-white mt-1">
-          No classical signal surfaced
+          No jazz signal surfaced
         </h3>
         <p className="text-white/60 text-sm mt-3">
           The service is reachable, but nothing passed the current curation

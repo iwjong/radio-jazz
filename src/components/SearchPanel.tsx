@@ -62,7 +62,7 @@ export function SearchPanel({ onClose }: Props) {
       onClick={onClose}
       role="dialog"
       aria-modal="true"
-      aria-label="Search classical stations"
+      aria-label="Search jazz stations"
     >
       <div
         className="absolute top-24 left-1/2 -translate-x-1/2 w-[min(660px,92vw)] panel-modal overflow-hidden shadow-soft"

@@ -23,7 +23,7 @@ export function AboutModal({ onClose }: Props) {
       onClick={onClose}
       role="dialog"
       aria-modal="true"
-      aria-label="About Radio Klassik"
+      aria-label="About Radio Jazz"
     >
       <div
         className="panel-modal p-8 w-[min(520px,92vw)] shadow-soft"
@@ -32,10 +32,10 @@ export function AboutModal({ onClose }: Props) {
         <div className="text-[10px] tracking-[0.3em] text-gold-400/80 uppercase">
           About
         </div>
-        <h2 className="font-display text-3xl text-white mt-1">Radio Klassik</h2>
+        <h2 className="font-display text-3xl text-white mt-1">Radio Jazz</h2>
         <p className="text-white/75 text-sm leading-relaxed mt-4">
-          A classical radio station explorer, built by a designer who loves
-          classical music.
+          A jazz radio station explorer, built by a designer who loves jazz —
+          straight-ahead, vocal, Latin, and late-night grooves on a world map.
         </p>
         <ul className="mt-5 space-y-2.5 text-sm">
           <li>

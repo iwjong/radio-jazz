@@ -94,7 +94,7 @@ export const useStore = create<State>()(
       toggleInfo: () => set({ showInfo: !get().showInfo }),
     }),
     {
-      name: "radio-klassik-v1",
+      name: "radio-jazz-v1",
       partialize: (s): PersistedState => ({
         recent: s.recent,
         volume: s.volume,

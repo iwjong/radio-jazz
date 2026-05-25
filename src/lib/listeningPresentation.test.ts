@@ -7,7 +7,7 @@ describe("listening presentation", () => {
     expect(getListeningPresentation(null, "idle")).toMatchObject({
       stateLabel: "Nothing playing",
       title: "Choose a station and let the room settle",
-      subtitle: "A quiet world map of curated classical stations is ready.",
+      subtitle: "A quiet world map of curated jazz stations is ready.",
     });
   });
 
@@ -16,9 +16,10 @@ describe("listening presentation", () => {
       getListeningPresentation(stationFixture(), "playing", "France"),
     ).toMatchObject({
       stateLabel: "Live",
-      title: "France Musique",
-      subtitle: "Late-night Paris orchestral programming · Verified",
-      detail: "Elegant, reflective, and editorial.",
+      title: "TSF Jazz",
+      subtitle:
+        "Paris jazz radio with French and international repertoire and a café-concert spirit. · Verified",
+      detail: "Candlelit bistro set.",
     });
   });
 
@@ -41,8 +42,8 @@ describe("listening presentation", () => {
 
 function stationFixture(): Station {
   return {
-    id: "france-musique",
-    name: "France Musique",
+    id: "tsf-jazz",
+    name: "TSF Jazz",
     url: "https://example.com/stream.mp3",
     homepage: "",
     favicon: "",
@@ -50,18 +51,19 @@ function stationFixture(): Station {
     countryCode: "FR",
     state: "",
     language: "french",
-    tags: ["classical"],
+    tags: ["jazz"],
     codec: "AAC",
     bitrate: 192,
     votes: 1200,
     clickCount: 20,
-    lat: 48.85,
-    lng: 2.35,
+    lat: 48.856,
+    lng: 2.352,
     isSecureStream: true,
     curationScore: 12,
     verified: true,
-    editorialDescription: "Late-night Paris orchestral programming",
-    listeningMood: "Elegant, reflective, and editorial.",
-    regionDescription: "A Parisian public-radio stage.",
+    editorialDescription:
+      "Paris jazz radio with French and international repertoire and a café-concert spirit.",
+    listeningMood: "Candlelit bistro set.",
+    regionDescription: "Left-bank listening with a conversational, vinyl-warm tone.",
   };
 }
